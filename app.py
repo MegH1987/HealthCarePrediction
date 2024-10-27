@@ -4,7 +4,7 @@ import joblib
 import plotly.express as px
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
-
+data_dir = "Dataset"
 
 model = joblib.load("health_camp_outcome.pkl")
 sc = model.sc
@@ -12,9 +12,9 @@ oh_map = model.oh_map
 
 def merge_data(new_data):
     new_data.drop(["Var2","Var3","Var4","Var5"], axis = 1,inplace = True)
-    camp_det = pd.read_csv("Health_Camp_Detail.csv")
-    patient_profile = pd.read_csv("Patient_Profile.csv")
-    fhc = pd.read_csv("First_Health_Camp_Attended.csv")
+    camp_det = pd.read_csv(data_dir+"\Health_Camp_Detail.csv")
+    patient_profile = pd.read_csv(data_dir+"\Patient_Profile.csv")
+    fhc = pd.read_csv(data_dir+"\First_Health_Camp_Attended.csv")
     patient_profile = patient_profile.replace("None",np.nan)
     dataset = pd.merge(new_data, camp_det, how = "left", on = "Health_Camp_ID")
     dataset = pd.merge(dataset, patient_profile, how = "left", on = "Patient_ID")
